@@ -1,27 +1,9 @@
-# Sort tabs advanced
+# Sort tabs advanced mpdified for personal use
 
-https://addons.mozilla.org/firefox/addon/sort-tabs-advanced/
+https://addons.mozilla.org/firefox/addon/sort-tabs-advanced-2/
 
-Web extension for sorting tabs by various criteria:
+original extension: https://github.com/monomon/sort-tabs-advanced
 
-* url
-* domain
-* title
-* last time of access
-
-I found myself frustrated that it's not possible to sort tabs by domain in Firefox 57.
-
-Then, I discovered that sorting tabs by access time is kinda useful.
-You can push the tabs you use often to the top, sinking old ones saved for later.
-
-There are switches in the popup that allow toggling automatic sorting and pinned tab sorting.
-
-## Automatic sorting
-
-The last sorting method that you selected gets remembered in settings.
-
-If automatic sorting is enabled, this sorting method will be applied every time you change tabs (create new, change url, etc.).
-
-## Building the extension
-
-Run `build.sh`, which uses `web-ext`.
+Changes:
+  * sort by tab creation time instead of last accessed
+  * tabs are automatically sorted whenever a session is restored
