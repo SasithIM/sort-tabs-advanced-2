@@ -57,20 +57,20 @@ function compareByTitleDesc(a, b) {
 	return b.title.localeCompare(a.title);
 }
 
-function compareByLastAccessAsc(a, b) {
-	if (a.lastAccessed < b.lastAccessed) {
+function compareByCreationTimeAsc(a, b) {
+	if (a.id < b.id) {
 		return -1;
-	} else if (a.lastAccessed > b.lastAccessed) {
+	} else if (a.id > b.id) {
 		return 1;
 	} else {
 		return 0;
 	}
 }
 
-function compareByLastAccessDesc(a, b) {
-	if (b.lastAccessed < a.lastAccessed) {
+function compareByCreationTimeDesc(a, b) {
+	if (b.id < a.id) {
 		return -1;
-	} else if (b.lastAccessed > a.lastAccessed) {
+	} else if (b.id > a.id) {
 		return 1;
 	} else {
 		return 0;
@@ -98,10 +98,10 @@ let menuIdToComparator = {
 	"sort-by-url-desc" : compareByUrlDesc,
 	"sort-by-domain-asc" : compareByDomainAsc,
 	"sort-by-domain-desc" : compareByDomainDesc,
-	"sort-by-last-access-asc" : compareByLastAccessAsc,
-	"sort-by-last-access-desc" : compareByLastAccessDesc,
 	"sort-by-title-asc" : compareByTitleAsc,
 	"sort-by-title-desc" : compareByTitleDesc,
+	"sort-by-creation-time-asc": compareByCreationTimeAsc,
+	"sort-by-creation-time-desc": compareByCreationTimeDesc
 };
 
 let settingsMenuIdToHandler = {
@@ -174,4 +174,34 @@ function settingChanged(evt) {
 
 function onError(error) {
   console.trace(error);
+}
+
+// Add these event listeners
+browser.runtime.onStartup.addListener(() => {
+  initializeAutoSort();
+});
+
+browser.runtime.onInstalled.addListener(() => {
+  initializeAutoSort();
+});
+
+// Add this new function to handle initialization
+function initializeAutoSort() {
+  browser.storage.local.get({
+    "last-comparator": "sort-by-creation-time-desc",  // Changed default
+    "settings-sort-auto": false,
+    "settings-sort-pinned": false
+  }).then(
+    (settings) => {
+      if (settings["settings-sort-auto"]) {
+        // Add the event listeners for auto-sorting
+        browser.tabs.onUpdated.addListener(settingsSortAutoHandler);
+        browser.tabs.onCreated.addListener(settingsSortAutoHandler);
+        
+        // Perform initial sort
+        if (menuIdToComparator[settings["last-comparator"]] !== undefined) {
+          return sortTabs(menuIdToComparator[settings["last-comparator"]], settings);
+        }
+      }
+    }, onError);
 }

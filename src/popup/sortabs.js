@@ -48,15 +48,15 @@ let menuDefs = [{
 		16 : "icons/sort-icon-title-desc-16.png"
 	}
 }, {
-	id : "sort-by-last-access-asc",
-	title : "sort by last access (asc)",
+	id : "sort-by-creation-time-asc",
+	title : "sort by creation time (asc)",
 	contexts : ["tools_menu", "browser_action"],
 	icons : {
 		16 : "icons/sort-icon-access-time-asc-16.png"
 	}
 }, {
-	id : "sort-by-last-access-desc",
-	title : "sort by last access (desc)",
+	id : "sort-by-creation-time-desc",
+	title : "sort by creation time (desc)",
 	contexts : ["tools_menu", "browser_action"],
 	icons : {
 		16 : "icons/sort-icon-access-time-desc-16.png"
@@ -78,11 +78,13 @@ function onError(error) {
   console.trace(error);
 }
 
-function initializeSettings() {
-  let defaultDict = settingsDefs.reduce(
-    (acc, cur, idx, src) => Object.assign(acc, {[cur.id]: false}),
-    {});
-  return browser.storage.local.get(defaultDict);
+async function initializeSettings() {
+	let defaultDict = settingsDefs.reduce(
+	  (acc, cur) => Object.assign(acc, {[cur.id]: false}),
+	  {});
+  
+	let settings = await browser.storage.local.get(defaultDict);
+  return settings;
 }
 
 function clickHandler(evt, settings) {

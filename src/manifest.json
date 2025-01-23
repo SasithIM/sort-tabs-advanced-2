@@ -1,8 +1,8 @@
 {
 	"manifest_version" : 2,
-	"name" : "Sort tabs advanced",
-	"version" : "0.2",
-	"author" : "Mois Moshev <mois@monomon.me>",
+	"name" : "Sort tabs advanced 2",
+	"version" : "1",
+	"author" : "Mois Moshev <mois@monomon.me> & Sasith Induwara",
 	"icons" : {
 		"48" : "icons/sortabs-48.png"
 	},
@@ -13,7 +13,7 @@
 			"24" : "icons/sortabs-24.png",
 			"48" : "icons/sortabs-48.png"
 		},
-		"default_title" : "Sort tabs advanced",
+		"default_title" : "Sort tabs advanced 2",
 		"default_popup" : "popup/picker.html",
 		"browser_style" : true
 	},
@@ -23,7 +23,7 @@
 	],
   "browser_specific_settings": {
     "gecko": {
-      "id": "{d6f02b92-88b3-4aa5-ba7c-14519042171d}"
+      "id": "{d6f02b92-88b3-4aa5-ba7c-14519442171d}"
     }
   },
   "background": {
